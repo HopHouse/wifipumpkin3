@@ -92,13 +92,35 @@ class ModPump(ModuleUI):
         print(display_messages("thread sniffing successfully stopped", info=True))
 
     def channel_hopper(self, interface):
+        channel_24Ghz = list(range(1, 11))
+
+        channel_5Ghz_20MHz = [36, 40, 44, 48, 149, 153, 157, 161,165]
+
+        channel_5Ghz_40MHz = []
+        channel_5Ghz_40MHz.extend(list(range(36, 40)))
+        channel_5Ghz_40MHz.extend(list(range(44, 48)))
+        channel_5Ghz_40MHz.extend(list(range(149, 153)))
+        channel_5Ghz_40MHz.extend(list(range(157, 161)))
+
+        channel_5Ghz_80MHz = []
+        channel_5Ghz_80MHz.extend(list(range(36, 48)))
+        channel_5Ghz_80MHz.extend(list(range(149, 161)))
+
+        all_channels = []
+        all_channels.extend(channel_24Ghz)
+        all_channels.extend(channel_5Ghz_20MHz)
+        all_channels.extend(channel_5Ghz_40MHz)
+        all_channels.extend(channel_5Ghz_80MHz)
+        all_channels = list(set(all_channels))
+
         while True:
-            try:
-                channel = randrange(1, 11)
-                os.system("iw dev %s set channel %d" % (interface, channel))
-                time.sleep(1)
-            except KeyboardInterrupt:
-                break
+            for channel in all_channels:
+                try:
+                    cmd = f"iw dev {interface} set channel {channel} 2>/dev/null"
+                    os.system(cmd)
+                    time.sleep(1)
+                except KeyboardInterrupt:
+                    break
 
     def handle_probe(self, pkt):
         if (

@@ -318,7 +318,7 @@ estful backend api
 - moved /scripts to user dir config [mh4x0f]
 - changed logs folder model [mh4x0f]
 - Moved __main__ code  to __init__ [mh4x0f]
-- Changed python3.6 to python3.7. [mh4x0f]
+- Changed python3.6 to python3.10. [mh4x0f]
 - Change do_info command to tabulate style. [mh4x0f]
 - Changed prompt line to more simple ;) [mh4x0f]
 
